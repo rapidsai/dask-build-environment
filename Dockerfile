@@ -12,7 +12,9 @@ ADD https://raw.githubusercontent.com/dask/dask/main/continuous_integration/envi
 
 RUN conda config --set ssl_verify false
 
-RUN conda install -c conda-forge mamba
+RUN conda install -c gpuci gpuci-tools
+
+RUN gpuci_conda_retry install -c conda-forge mamba
 
 RUN mamba env create -n dask --file /dask_environment.yaml
 
