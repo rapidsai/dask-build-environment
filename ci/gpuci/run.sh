@@ -30,13 +30,13 @@ gpuci_logger "Build config info..."
 echo "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
 echo "Build args: ${BUILD_ARGS}"
 gpuci_logger "Docker build command..."
-echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCKER_FILE} ${IMAGE_NAME}/"
+echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCKER_FILE} ${WORKSPACE}"
 
 # Build image
 gpuci_logger "Starting build..."
 GPUCI_RETRY_MAX=1
 GPUCI_RETRY_SLEEP=120
-gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${IMAGE_NAME}/
+gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${WORKSPACE}
 
 # List image info
 gpuci_logger "Displaying image info..."
