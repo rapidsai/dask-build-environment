@@ -10,6 +10,8 @@ ARG RAPIDS_VER=21.08
 
 ADD https://raw.githubusercontent.com/dask/dask/main/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask_environment.yaml
 
+RUN conda config --set ssl_verify false
+
 RUN conda install -c conda-forge mamba
 
 RUN mamba env create -n dask --file /dask_environment.yaml

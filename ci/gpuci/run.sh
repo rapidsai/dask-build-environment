@@ -36,7 +36,7 @@ echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCK
 gpuci_logger "Starting build..."
 GPUCI_RETRY_MAX=1
 GPUCI_RETRY_SLEEP=120
-gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${IMAGE_NAME}/${DOCKER_FILE} ${WORKSPACE}
+gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCKER_FILE} ${WORKSPACE}
 
 # List image info
 gpuci_logger "Displaying image info..."
