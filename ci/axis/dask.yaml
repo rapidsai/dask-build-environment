@@ -1,3 +1,11 @@
+DOCKER_FILE:
+  - dask.Dockerfile
+  - distributed.Dockerfile
+
+BUILD_IMAGE:
+  - gpuci/dask
+  - gpuci/distributed
+
 CUDA_VER:
   - '11.2'
 
@@ -13,4 +21,8 @@ RAPIDS_VER:
 UCX_PY_VER:
   - '0.21'
 
-excludes: {}
+excludes:
+  - DOCKER_FILE: dask.Dockerfile
+    BUILD_IMAGE: gpuci/distributed
+  - DOCKER_FILE: distributed.Dockerfile
+    BUILD_IMAGE: gpuci/dask
