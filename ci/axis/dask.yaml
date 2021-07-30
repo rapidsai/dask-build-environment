@@ -10,4 +10,7 @@ LINUX_VER:
 RAPIDS_VER:
   - '21.08'
 
+UCX_PY_VER:
+  - '0.21'
+
 excludes: {}
