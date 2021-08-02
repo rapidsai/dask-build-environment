@@ -24,6 +24,7 @@ RUN gpuci_mamba_retry install -y -n dask -c rapidsai -c rapidsai-nightly -c nvid
     cudf=$RAPIDS_VER \
     cupy \
     pynvml \
+    "ucx-proc=*=gpu" \
     ucx-py=$UCX_PY_VER
 
 # Clean up pkgs to reduce image size and chmod for all users
