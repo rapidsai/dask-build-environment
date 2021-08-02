@@ -22,8 +22,10 @@ RUN gpuci_mamba_retry env create -n dask --file /dask_environment.yaml
 RUN gpuci_mamba_retry install -y -n dask -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
+    dask-cudf=$RAPIDS_VER \
     cupy \
     pynvml \
+    ucx-proc=*=gpu \
     ucx-py=$UCX_PY_VER
 
 # Clean up pkgs to reduce image size and chmod for all users
