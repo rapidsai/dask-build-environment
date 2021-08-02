@@ -18,12 +18,10 @@ env
 gpuci_logger "Logging into Docker..."
 echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 
-DOCKER_FILE="${WORKSPACE}/Dockerfile"
-BUILD_IMAGE="gpuci/dask"
 BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
 
 # Setup BUILD_ARGS
-BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
+BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg UCX_PY_VER=$UCX_PY_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
 
 # Ouput build config
 gpuci_logger "Build config info..."
