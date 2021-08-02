@@ -21,9 +21,15 @@ RAPIDS_VER:
 
 UCX_PY_VER:
   - '0.21'
+  - '0.22'
 
 excludes:
   - DOCKER_FILE: dask.Dockerfile
     BUILD_IMAGE: gpuci/distributed
   - DOCKER_FILE: distributed.Dockerfile
     BUILD_IMAGE: gpuci/dask
+
+  - RAPIDS_VER: '21.08'
+    UCX_PY_VER: '0.22'
+  - RAPIDS_VER: '21.10'
+    UCX_PY_VER: '0.21'
