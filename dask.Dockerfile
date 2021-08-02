@@ -9,7 +9,7 @@ ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 
 
-ADD https://raw.githubusercontent.com/dask/dask/main/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask_environment.yaml
+ADD https://raw.githubusercontent.com/dask/dask/main/continuous_integration/environment-$PYTHON_VER.yaml /dask_environment.yaml
 
 RUN conda config --set ssl_verify false
 
