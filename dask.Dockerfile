@@ -5,6 +5,7 @@ FROM gpuci/miniconda-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
 ARG PYTHON_VER=3.8
+ARG NUMPY_VER=1.21
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 
@@ -23,6 +24,7 @@ RUN gpuci_mamba_retry install -y -n dask -c rapidsai -c rapidsai-nightly -c nvid
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
     dask-cudf=$RAPIDS_VER \
+    numpy=$NUMPY_VER \
     cupy \
     pynvml \
     "ucx-proc=*=gpu" \
