@@ -8,7 +8,6 @@ ARG PYTHON_VER=3.8
 ARG NUMPY_VER=1.21
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
-ARG JAVA_VER=11
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/conda.txt /dask_sql_requirements.txt
 
@@ -25,7 +24,6 @@ RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c 
     cudf=$RAPIDS_VER \
     dask-cudf=$RAPIDS_VER \
     numpy=$NUMPY_VER \
-    openjdk=$JAVA_VER \
     # following requirements are for postgres testing; might not need them
     sqlalchemy>=1.4.23 \
     pyhive>=0.6.4 \
