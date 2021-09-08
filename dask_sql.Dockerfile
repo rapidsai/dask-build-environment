@@ -24,19 +24,6 @@ RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c 
     cudf=$RAPIDS_VER \
     dask-cudf=$RAPIDS_VER \
     numpy=$NUMPY_VER \
-    # following requirements are for postgres testing; might not need them
-    sqlalchemy>=1.4.23 \
-    pyhive>=0.6.4 \
-    psycopg2>=2.9.1 \
-    ciso8601>=2.2.0 \
-    tpot>=0.11.7 \
-    mlflow>=1.19.0 \
-    docker-py>=5.0.0
-    
-RUN conda activate dask_sql && python -m pip install fugue[sql]>=0.5.3
-
-RUN docker pull bde2020/hive:2.3.2-postgresql-metastore
-RUN docker pull bde2020/hive-metastore-postgresql:2.3.0
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \
