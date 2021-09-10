@@ -11,6 +11,9 @@ ARG UCX_PY_VER=0.21
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/conda.txt /dask_sql_requirements.txt
 
+# conda file doesn't specify python version
+RUN echo "python=$PYTHON_VER" >> /dask_sql_requirements.txt
+
 RUN conda config --set ssl_verify false
 
 RUN conda install -c gpuci gpuci-tools
