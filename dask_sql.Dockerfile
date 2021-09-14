@@ -9,10 +9,7 @@ ARG NUMPY_VER=1.21
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 
-ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/conda.txt /dask_sql_requirements.txt
-
-# conda file doesn't specify python version
-RUN echo "python=$PYTHON_VER" >> /dask_sql_requirements.txt
+ADD https://raw.githubusercontent.com/charlesbluca/dask-sql/add-conda-yaml/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask_sql_environment.yaml
 
 RUN conda config --set ssl_verify false
 
@@ -20,7 +17,7 @@ RUN conda install -c gpuci gpuci-tools
 
 RUN gpuci_conda_retry install -c conda-forge mamba
 
-RUN gpuci_mamba_retry env create -n dask_sql --file /dask_sql_requirements.txt -c conda-forge
+RUN gpuci_mamba_retry env create -n dask_sql --file /dask_sql_environment.yaml
 
 RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
     cudatoolkit=$CUDA_VER \
