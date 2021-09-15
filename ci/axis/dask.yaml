@@ -1,12 +1,7 @@
-DOCKER_FILE:
-  - dask.Dockerfile
-  - distributed.Dockerfile
-  - dask_sql.Dockerfile
-
-BUILD_IMAGE:
-  - gpuci/dask
-  - gpuci/distributed
-  - gpuci/dask_sql
+BUILD_NAME:
+  - dask
+  - distributed
+  - dask_sql
 
 CUDA_VER:
   - '11.2'
@@ -21,27 +16,4 @@ RAPIDS_VER:
   - '21.08'
   - '21.10'
 
-UCX_PY_VER:
-  - '0.21'
-  - '0.22'
-
 excludes:
-  - DOCKER_FILE: dask.Dockerfile
-    BUILD_IMAGE: gpuci/distributed
-  - DOCKER_FILE: dask.Dockerfile
-    BUILD_IMAGE: gpuci/dask_sql
-
-  - DOCKER_FILE: distributed.Dockerfile
-    BUILD_IMAGE: gpuci/dask
-  - DOCKER_FILE: distributed.Dockerfile
-    BUILD_IMAGE: gpuci/dask_sql
-
-  - DOCKER_FILE: dask_sql.Dockerfile
-    BUILD_IMAGE: gpuci/dask
-  - DOCKER_FILE: dask_sql.Dockerfile
-    BUILD_IMAGE: gpuci/distributed
-
-  - RAPIDS_VER: '21.08'
-    UCX_PY_VER: '0.22'
-  - RAPIDS_VER: '21.10'
-    UCX_PY_VER: '0.21'
