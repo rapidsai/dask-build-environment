@@ -18,12 +18,12 @@ LINUX_VER:
   - ubuntu18.04
 
 RAPIDS_VER:
-  - '21.08'
   - '21.10'
+  - '21.12'
 
 UCX_PY_VER:
-  - '0.21'
   - '0.22'
+  - '0.23'
 
 excludes:
   - DOCKER_FILE: dask.Dockerfile
@@ -41,7 +41,7 @@ excludes:
   - DOCKER_FILE: dask_sql.Dockerfile
     BUILD_IMAGE: gpuci/distributed
 
-  - RAPIDS_VER: '21.08'
-    UCX_PY_VER: '0.22'
   - RAPIDS_VER: '21.10'
-    UCX_PY_VER: '0.21'
+    UCX_PY_VER: '0.23'
+  - RAPIDS_VER: '21.12'
+    UCX_PY_VER: '0.22'
