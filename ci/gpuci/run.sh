@@ -21,9 +21,23 @@ echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
 
 # Setup BUILD_ARGS
+case $RAPIDS_VER in
+  "21.10")
+    UCX_PY_VER="0.22"
+    ;;
+  "21.12")
+    UCX_PY_VER="0.23"
+    ;;
+  *)
+    echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
+    exit 1
+    ;;
+esac
+DOCKER_FILE="${BUILD_NAME}.Dockerfile"
+BUILD_IMAGE="gpuci/${BUILD_NAME}"
 BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg UCX_PY_VER=$UCX_PY_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
 
-# Ouput build config
+# Output build config
 gpuci_logger "Build config info..."
 echo "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
 echo "Build args: ${BUILD_ARGS}"
