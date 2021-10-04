@@ -8,7 +8,7 @@ on:
 jobs:
   update-gpuci:
     runs-on: ubuntu-latest
-    if: github.repository == 'rapidsai/dask-build-environment'
+    # if: github.repository == 'rapidsai/dask-build-environment'
 
     steps:
       - uses: actions/checkout@v2
