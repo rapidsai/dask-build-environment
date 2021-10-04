@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Get old cuDF / UCX-Py versions
-        run:
+        run: |
           echo RAPIDS_VER=$(grep -A 2 "RAPIDS_VER" ci/axis/dask.yaml | tail -n1 | grep -o "'.*'") >> $GITHUB_ENV
           echo $(grep -m2 "UCX_PY_VER" ci/gpuci/run.sh | tail -n1) >> $GITHUB_ENV
 
@@ -58,7 +58,7 @@ jobs:
           include: 'ci\/gpuci\/run\.sh'
           find: "case(.|\n)*esac"
           replace: |-
-            case \$RAPIDS_VER in
+            case ${{ '$RAPIDS_VER' }} in
               "${{ env.RAPIDS_VER }}")
                 UCX_PY_VER="${{ env.UCX_PY_VER }}"
                 ;;
@@ -66,7 +66,7 @@ jobs:
                 UCX_PY_VER="${{ env.NEW_UCX_PY_VER }}"
                 ;;
               *)
-                echo "Unrecognized RAPIDS_VER: \${RAPIDS_VER}"
+                echo "Unrecognized RAPIDS_VER: ${{ '${RAPIDS_VER}' }}"
                 exit 1
                 ;;
             esac
