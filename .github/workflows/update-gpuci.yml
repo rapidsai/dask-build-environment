@@ -32,7 +32,7 @@ jobs:
         with:
           org: "rapidsai-nightly"
           package: "ucx-py"
-          version_system: "CalVer"
+          version_system: "SemVer"
 
       - name: Strip git tags from versions
         env:
