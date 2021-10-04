@@ -22,11 +22,11 @@ BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
 
 # Setup BUILD_ARGS
 case $RAPIDS_VER in
-  "21.08")
-    UCX_PY_VER="0.21"
-    ;;
   "21.10")
     UCX_PY_VER="0.22"
+    ;;
+  "21.12")
+    UCX_PY_VER="0.23"
     ;;
   *)
     echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
