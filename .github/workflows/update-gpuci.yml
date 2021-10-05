@@ -56,9 +56,8 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@0.1.4
         with:
           include: 'ci\/gpuci\/run\.sh'
-          find: "case(.|\n)*esac"
+          find: '\s{2}".*\)(.|\n)*\*\)'
           replace: |-
-            case ${{ '$RAPIDS_VER' }} in
               "${{ env.RAPIDS_VER }}")
                 UCX_PY_VER="${{ env.UCX_PY_VER }}"
                 ;;
@@ -66,10 +65,6 @@ jobs:
                 UCX_PY_VER="${{ env.NEW_UCX_PY_VER }}"
                 ;;
               *)
-                echo "Unrecognized RAPIDS_VER: ${{ '${RAPIDS_VER}' }}"
-                exit 1
-                ;;
-            esac
 
       - name: Create pull request
         if: ${{ RAPID_VER != NEW_RAPIDS_VER && UCX_PY_VER != NEW_UCX_PY_VER }}
