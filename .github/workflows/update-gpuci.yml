@@ -20,7 +20,7 @@ jobs:
 
       - name: Get latest cuDF nightly version
         id: cudf_latest
-        uses: jacobtomlinson/gha-anaconda-package-version@0.1.2
+        uses: jacobtomlinson/gha-anaconda-package-version@0.1.3
         with:
           org: "rapidsai-nightly"
           package: "cudf"
@@ -32,7 +32,7 @@ jobs:
         with:
           org: "rapidsai-nightly"
           package: "ucx-py"
-          version_system: "SemVer"
+          version_system: "CalVer"
 
       - name: Strip git tags from versions
         env:
