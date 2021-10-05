@@ -67,7 +67,7 @@ jobs:
               *)
 
       - name: Create pull request
-        if: ${{ RAPID_VER != NEW_RAPIDS_VER && UCX_PY_VER != NEW_UCX_PY_VER }}
+        if: ${{ env.RAPID_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
