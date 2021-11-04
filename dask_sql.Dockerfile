@@ -23,7 +23,9 @@ RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c 
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
     dask-cudf=$RAPIDS_VER \
-    numpy=$NUMPY_VER
+    numpy=$NUMPY_VER \
+    "ucx-proc=*=gpu" \
+    ucx-py=$UCX_PY_VER
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \
