@@ -8,13 +8,15 @@ on:
 jobs:
   update-gpuci:
     runs-on: ubuntu-latest
-    if: github.repository == 'rapidsai/dask-build-environment'
+    # if: github.repository == 'rapidsai/dask-build-environment'
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Get old cuDF / UCX-Py versions
         run: |
+          echo OLD_RAPIDS_VER=$(grep -A 1 "RAPIDS_VER" ci/axis/dask.yaml | tail -n1 | grep -o "'.*'" | sed "s/'//g") >> $GITHUB_ENV
+          echo OLD_UCX_PY_VER=$(grep -m1 "UCX_PY_VER" ci/gpuci/run.sh | tail -n1 | grep -o '".*"' | sed 's/"//g') >> $GITHUB_ENV
           echo RAPIDS_VER=$(grep -A 2 "RAPIDS_VER" ci/axis/dask.yaml | tail -n1 | grep -o "'.*'" | sed "s/'//g") >> $GITHUB_ENV
           echo UCX_PY_VER=$(grep -m2 "UCX_PY_VER" ci/gpuci/run.sh | tail -n1 | grep -o '".*"' | sed 's/"//g') >> $GITHUB_ENV
 
@@ -42,32 +44,40 @@ jobs:
           echo "NEW_RAPIDS_VER=${FULL_RAPIDS_VER::-10}" >> $GITHUB_ENV
           echo "NEW_UCX_PY_VER=${FULL_UCX_PY_VER::-9}" >> $GITHUB_ENV
 
-      - name: Update axis file
-        uses: jacobtomlinson/gha-find-replace@0.1.4
+      - name: Update new RAPIDS versions
+        uses: jacobtomlinson/gha-find-replace@v2
         with:
-          include: 'ci\/axis\/dask\.yaml'
-          find: "RAPIDS_VER:\n  - .*\n  - .*"
-          replace: |-
-            RAPIDS_VER:
-              - '${{ env.RAPIDS_VER }}'
-              - '${{ env.NEW_RAPIDS_VER }}'
+          include: 'ci/**'
+          find: "${{ env.RAPIDS_VER }}"
+          replace: "${{ env.NEW_RAPIDS_VER }}"
+          regex: false
 
-      - name: Update run file
-        uses: jacobtomlinson/gha-find-replace@0.1.4
+      - name: Update old RAPIDS versions
+        uses: jacobtomlinson/gha-find-replace@v2
         with:
-          include: 'ci\/gpuci\/run\.sh'
-          find: '\s{2}".*\)(.|\n)*\*\)'
-          replace: |-
-              "${{ env.RAPIDS_VER }}")
-                UCX_PY_VER="${{ env.UCX_PY_VER }}"
-                ;;
-              "${{ env.NEW_RAPIDS_VER }}")
-                UCX_PY_VER="${{ env.NEW_UCX_PY_VER }}"
-                ;;
-              *)
+          include: 'ci/**'
+          find: "${{ env.OLD_RAPIDS_VER }}"
+          replace: "${{ env.RAPIDS_VER }}"
+          regex: false
+
+      - name: Update new UCX-Py versions
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          include: 'ci/**'
+          find: "${{ env.UCX_PY_VER }}"
+          replace: "${{ env.NEW_UCX_PY_VER }}"
+          regex: false
+
+      - name: Update old UCX-Py versions
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          include: 'ci/**'
+          find: "${{ env.OLD_UCX_PY_VER }}"
+          replace: "${{ env.UCX_PY_VER }}"
+          regex: false
 
       - name: Create pull request
-        if: ${{ env.RAPID_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
+        # if: ${{ env.RAPID_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -77,6 +87,6 @@ jobs:
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           branch: "upgrade-gpuci-rapids"
           body: |
-            A new cuDF nightly version has been detected.
+            New cuDF and ucx-py nightly versions have been detected.
 
-            Updated `dask.yaml` and `run.sh` to use `${{ env.NEW_RAPIDS_VER }}`.
+            Updated `dask.yaml` and `run.sh` to use `RAPIDS_VER=${{ env.NEW_RAPIDS_VER }}` and `UCX_PY_VER=${{ env.NEW_UCX_PY_VER }}`.
