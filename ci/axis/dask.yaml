@@ -13,7 +13,7 @@ LINUX_VER:
   - ubuntu18.04
 
 RAPIDS_VER:
-  - '21.10'
   - '21.12'
+  - '22.02'
 
 excludes:
