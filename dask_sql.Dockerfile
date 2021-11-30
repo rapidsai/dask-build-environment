@@ -22,8 +22,6 @@ RUN gpuci_mamba_retry env create -n dask_sql --file /dask_sql_environment.yaml
 RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
-    cuml=$RAPIDS_VER \
-    xgboost \
     dask-cudf=$RAPIDS_VER \
     dask-cuda=$RAPIDS_VER \
     numpy=$NUMPY_VER \
