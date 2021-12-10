@@ -18,7 +18,15 @@ env
 gpuci_logger "Logging into Docker..."
 echo $DH_TOKEN | docker login --username $DH_USER --password-stdin &> /dev/null
 
-BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
+# Setup BUILD_TAG
+case ${BUILD_NAME} in
+  "dask_image")  # doesn't depend on RAPIDS for gpuCI
+    BUILD_TAG="cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
+    ;;
+  *)
+    BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
+    ;;
+esac
 
 # Setup BUILD_ARGS
 case $RAPIDS_VER in
