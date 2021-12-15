@@ -5,8 +5,8 @@ FROM gpuci/miniconda-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
 ARG PYTHON_VER=3.8
+# RAPIDS_VER isn't used but is part of the matrix so must be included
 ARG RAPIDS_VER=21.08
-ARG UCX_PY_VER=0.21
 
 ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-3.8.yml /dask_image_environment.yaml
 

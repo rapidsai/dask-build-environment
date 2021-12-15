@@ -43,7 +43,18 @@ case $RAPIDS_VER in
 esac
 DOCKER_FILE="${BUILD_NAME}.Dockerfile"
 BUILD_IMAGE="gpuci/${BUILD_NAME}"
-BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg UCX_PY_VER=$UCX_PY_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
+
+# Setup BUILD_TAG and BUILD_ARGS
+case ${BUILD_NAME} in
+  "dask_image")  # doesn't depend on RAPIDS / ucx-py for gpuCI
+    BUILD_TAG="cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
+    BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
+    ;;
+  *)
+    BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
+    BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg UCX_PY_VER=$UCX_PY_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
+    ;;
+esac
 
 # Output build config
 gpuci_logger "Build config info..."
