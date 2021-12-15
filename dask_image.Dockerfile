@@ -8,7 +8,7 @@ ARG PYTHON_VER=3.8
 # RAPIDS_VER isn't used but is part of the matrix so must be included
 ARG RAPIDS_VER=21.08
 
-ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-3.8.yml /dask_image_environment.yaml
+ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-$PYTHON_VER.yml /dask_image_environment.yaml
 
 RUN conda config --set ssl_verify false
 
