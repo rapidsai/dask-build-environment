@@ -5,7 +5,6 @@ FROM gpuci/miniconda-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
 ARG PYTHON_VER=3.8
-ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 
@@ -20,8 +19,7 @@ RUN gpuci_conda_retry install -c conda-forge mamba
 RUN gpuci_mamba_retry env create -n dask_image --file /dask_image_environment.yaml
 
 RUN gpuci_mamba_retry install -y -n dask_image -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
-    cudatoolkit=$CUDA_VER \
-    "numpy>=$NUMPY_VER" \
+    cudatoolkit=$CUDA_VER
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \
