@@ -2,6 +2,7 @@ BUILD_NAME:
   - dask
   - distributed
   - dask_sql
+  - dask_image
 
 CUDA_VER:
   - '11.2'
@@ -17,3 +18,6 @@ RAPIDS_VER:
   - '22.02'
 
 excludes:
+  # dask-image gpuCI isn't dependent on RAPIDS
+  - RAPID_VER: '21.12'
+    BUILD_NAME: dask_image

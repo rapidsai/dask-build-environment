@@ -9,7 +9,7 @@ ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 
-ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-3.8-jdk11-dev.yaml /dask_sql_environment.yaml
+ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-jdk11-dev.yaml /dask_sql_environment.yaml
 
 RUN conda config --set ssl_verify false
 
