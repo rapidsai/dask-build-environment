@@ -5,7 +5,7 @@ BUILD_NAME:
   - dask_image
 
 CUDA_VER:
-  - '11.2'
+  - '11.5'
 
 PYTHON_VER:
   - '3.8'
