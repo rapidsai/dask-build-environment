@@ -42,7 +42,7 @@ jobs:
           FULL_UCX_PY_VER: ${{ steps.ucx_py_latest.outputs.version }}
         run: |
           echo "NEW_RAPIDS_VER=${FULL_RAPIDS_VER::-10}" >> $GITHUB_ENV
-          echo "NEW_UCX_PY_VER=${FULL_UCX_PY_VER::-9}" >> $GITHUB_ENV
+          echo "NEW_UCX_PY_VER=${FULL_UCX_PY_VER::-10}" >> $GITHUB_ENV
 
       - name: Update new RAPIDS versions
         uses: jacobtomlinson/gha-find-replace@v2
