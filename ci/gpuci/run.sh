@@ -34,7 +34,7 @@ case $RAPIDS_VER in
     UCX_PY_VER="0.24"
     ;;
   "22.04")
-    UCX_PY_VER="0.25."
+    UCX_PY_VER="0.25"
     ;;
   *)
     echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
