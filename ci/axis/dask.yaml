@@ -19,5 +19,5 @@ RAPIDS_VER:
 
 excludes:
   # dask-image gpuCI isn't dependent on RAPIDS
-  - RAPID_VER: '22.02'
-    BUILD_NAME: dask_image
+  - BUILD_NAME: dask_image
+    RAPIDS_VER: '22.02'
