@@ -1,7 +1,7 @@
 ARG CUDA_VER=11.2
 ARG LINUX_VER=ubuntu18.04
 
-FROM gpuci/miniconda-cuda:$CUDA_VER-devel-$LINUX_VER
+FROM gpuci/miniforge-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
 ARG PYTHON_VER=3.8
