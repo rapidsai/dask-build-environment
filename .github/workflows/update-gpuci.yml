@@ -14,7 +14,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Parse current axis YAML
-        id: yaml
         uses: the-coding-turtle/ga-yaml-parser@v0.1.1
         with:
           file: ci/axis/dask.yaml
