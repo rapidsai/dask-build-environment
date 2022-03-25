@@ -1,0 +1,21 @@
+name: Testing YAML parser
+
+on:
+  workflow_dispatch:
+
+jobs:
+  yaml-parser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get current/old RAPIDS versions
+        id: yaml
+        uses: the-coding-turtle/ga-yaml-parser@v0.1.1
+        with:
+          file: ci/axis/dask.yaml
+      - name: Echo parsed versions
+        env:
+          RAPIDS_VER: ${{ steps.yaml.outputs.RAPIDS_VER }}
+        run: |
+          echo $RAPIDS_VER
+
