@@ -13,12 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Get old cuDF / UCX-Py versions
+      - name: Parse current axis YAML
+        uses: the-coding-turtle/ga-yaml-parser@v0.1.1
+        with:
+          file: ci/axis/dask.yaml
+
+      - name: Get old RAPIDS / UCX-Py versions
         run: |
-          echo OLD_RAPIDS_VER=$(grep -A 1 "RAPIDS_VER" ci/axis/dask.yaml | tail -n1 | grep -o "'.*'" | sed "s/'//g") >> $GITHUB_ENV
-          echo OLD_UCX_PY_VER=$(grep -m1 "UCX_PY_VER" ci/gpuci/run.sh | tail -n1 | grep -o '".*"' | sed 's/"//g') >> $GITHUB_ENV
-          echo RAPIDS_VER=$(grep -A 2 "RAPIDS_VER" ci/axis/dask.yaml | tail -n1 | grep -o "'.*'" | sed "s/'//g") >> $GITHUB_ENV
-          echo UCX_PY_VER=$(grep -m2 "UCX_PY_VER" ci/gpuci/run.sh | tail -n1 | grep -o '".*"' | sed 's/"//g') >> $GITHUB_ENV
+          echo OLD_RAPIDS_VER=$RAPIDS_VER_0 >> $GITHUB_ENV
+          echo OLD_UCX_PY_VER=$(curl -sL https://version.gpuci.io/rapids/$RAPIDS_VER_0) >> $GITHUB_ENV
+          echo RAPIDS_VER=$RAPIDS_VER_1 >> $GITHUB_ENV
+          echo UCX_PY_VER=$(curl -sL https://version.gpuci.io/rapids/$RAPIDS_VER_1) >> $GITHUB_ENV
 
       - name: Get latest cuDF nightly version
         id: cudf_latest
