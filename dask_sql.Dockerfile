@@ -5,11 +5,8 @@ FROM gpuci/miniforge-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
 ARG PYTHON_VER=3.8
-ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
-ARG RUST_VER=1.60.0
-ARG SETUPTOOLS_RUST_VER=1.2.0
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-jdk11-dev.yaml /environment.yaml
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/gpuci/environment.yaml /gpuci.yaml
