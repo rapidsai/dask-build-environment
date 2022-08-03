@@ -9,7 +9,7 @@ ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
 ARG RUST_VER=1.62.1
-ARG SETUPTOOLS_RUST_VER=1.2.0
+ARG SETUPTOOLS_RUST_VER=1.4.1
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-jdk11-dev.yaml /dask_sql_environment.yaml
 
