@@ -8,8 +8,11 @@ ARG PYTHON_VER=3.8
 ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
-ARG RUST_VER=1.62.1
 ARG SETUPTOOLS_RUST_VER=1.4.1
+
+ADD https://sh.rustup.rs /rustup-init.sh
+RUN sh /rustup-init.sh -y --default-toolchain=stable --profile=minimal
+ENV PATH="/root/.cargo/bin:${PATH}"
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-jdk11-dev.yaml /dask_sql_environment.yaml
 
@@ -22,7 +25,6 @@ RUN gpuci_conda_retry install -c conda-forge mamba
 RUN gpuci_mamba_retry env create -n dask_sql --file /dask_sql_environment.yaml
 
 RUN gpuci_mamba_retry install -y -n dask_sql -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
-    "rust>=$RUST_VER" \
     "setuptools-rust>=$SETUPTOOLS_RUST_VER" \
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
