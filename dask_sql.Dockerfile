@@ -11,7 +11,7 @@ ARG UCX_PY_VER=0.21
 
 ADD https://sh.rustup.rs /rustup-init.sh
 RUN sh /rustup-init.sh -y --default-toolchain=stable --profile=minimal
-ENV PATH="/root/.cargo/bin:${PATH}"
+ENV PATH="${HOME}/.cargo/bin:${PATH}"
 
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask_sql_environment.yaml
 
