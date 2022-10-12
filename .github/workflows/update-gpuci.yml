@@ -82,7 +82,7 @@ jobs:
           regex: false
 
       - name: Create pull request
-        if: ${{ env.RAPID_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
+        if: ${{ env.RAPIDS_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
