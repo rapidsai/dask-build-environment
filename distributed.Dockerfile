@@ -20,7 +20,7 @@ RUN gpuci_conda_retry install -c conda-forge mamba
 
 RUN gpuci_mamba_retry env create -n dask --file /distributed_environment.yaml
 
-RUN gpuci_mamba_retry install -y -n dask -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
+RUN gpuci_mamba_retry install -y -n dask -c rapidsai -c rapidsai-nightly -c conda-forge -c nvidia \
     cudatoolkit=$CUDA_VER \
     cudf=$RAPIDS_VER \
     "numpy>=$NUMPY_VER" \
