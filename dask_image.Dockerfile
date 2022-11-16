@@ -18,7 +18,7 @@ RUN gpuci_conda_retry install -c conda-forge mamba
 
 RUN gpuci_mamba_retry env create -n dask_image --file /dask_image_environment.yaml
 
-RUN gpuci_mamba_retry install -y -n dask_image -c rapidsai -c rapidsai-nightly -c nvidia -c conda-forge \
+RUN gpuci_mamba_retry install -y -n dask_image -c rapidsai -c rapidsai-nightly -c conda-forge -c nvidia \
     cudatoolkit=$CUDA_VER
 
 # Clean up pkgs to reduce image size and chmod for all users
