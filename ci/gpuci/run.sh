@@ -41,7 +41,7 @@ case $RAPIDS_VER in
     exit 1
     ;;
 esac
-DOCKER_FILE="${BUILD_NAME}.Dockerfile"
+DOCKER_FILE="${BUILD_NAME}/Dockerfile"
 BUILD_IMAGE="gpuci/${BUILD_NAME}"
 
 # Setup BUILD_TAG and BUILD_ARGS
