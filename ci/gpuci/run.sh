@@ -41,8 +41,8 @@ case $RAPIDS_VER in
     exit 1
     ;;
 esac
-DOCKER_FILE="${BUILD_NAME}.Dockerfile"
 BUILD_IMAGE="gpuci/${BUILD_NAME}"
+BUILD_DIR="${WORKSPACE}/${BUILD_NAME}"
 
 # Setup BUILD_TAG and BUILD_ARGS
 case ${BUILD_NAME} in
@@ -61,13 +61,13 @@ gpuci_logger "Build config info..."
 echo "Build image and tag: ${BUILD_IMAGE}:${BUILD_TAG}"
 echo "Build args: ${BUILD_ARGS}"
 gpuci_logger "Docker build command..."
-echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCKER_FILE} ${WORKSPACE}"
+echo "docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} ${BUILD_DIR}"
 
 # Build image
 gpuci_logger "Starting build..."
 GPUCI_RETRY_MAX=1
 GPUCI_RETRY_SLEEP=120
-gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} -f ${DOCKER_FILE} ${WORKSPACE}
+gpuci_retry docker build --pull -t ${BUILD_IMAGE}:${BUILD_TAG} ${BUILD_ARGS} ${BUILD_DIR}
 
 # List image info
 gpuci_logger "Displaying image info..."

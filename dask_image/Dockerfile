@@ -8,18 +8,22 @@ ARG PYTHON_VER=3.8
 # RAPIDS_VER isn't used but is part of the matrix so must be included
 ARG RAPIDS_VER=21.08
 
-ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-$PYTHON_VER.yml /dask_image_environment.yaml
+COPY environment.yml /rapids.yml
+ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-$PYTHON_VER.yml /dask.yml
 
 RUN conda config --set ssl_verify false
 
 RUN conda install -c gpuci gpuci-tools
 
-RUN gpuci_conda_retry install -c conda-forge mamba
+RUN gpuci_conda_retry install -c conda-forge mamba conda-merge
 
-RUN gpuci_mamba_retry env create -n dask_image --file /dask_image_environment.yaml
+RUN cat /rapids.yml \
+    | sed -r "s/CUDA_VER/${CUDA_VER}/g" \
+    > /rapids_pinned.yml
 
-RUN gpuci_mamba_retry install -y -n dask_image -c rapidsai -c rapidsai-nightly -c conda-forge -c nvidia \
-    cudatoolkit=$CUDA_VER
+RUN conda-merge /rapids_pinned.yml /dask.yml > /dask_image.yml
+
+RUN gpuci_mamba_retry env create -n dask_image --file /dask_image.yml
 
 # Clean up pkgs to reduce image size and chmod for all users
 RUN chmod -R ugo+w /opt/conda \

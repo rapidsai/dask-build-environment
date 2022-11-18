@@ -1,0 +1,8 @@
+name: rapids
+channels:
+- rapidsai
+- rapidsai-nightly
+- conda-forge
+- nvidia
+dependencies:
+- cudatoolkit=CUDA_VER
