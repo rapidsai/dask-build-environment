@@ -1,0 +1,16 @@
+name: rapids
+channels:
+- rapidsai
+- rapidsai-nightly
+- conda-forge
+- nvidia
+dependencies:
+- cudatoolkit=CUDA_VER
+- cudf=RAPIDS_VER
+- cuml=RAPIDS_VER
+- dask-cudf=RAPIDS_VER
+- dask-cuda=RAPIDS_VER
+- numpy>=NUMPY_VER
+- ucx-proc=*=gpu
+- ucx-py=UCX_PY_VER
+- xgboost=*=cuda_*
