@@ -22,7 +22,7 @@ RUN conda config --set ssl_verify false
 
 RUN conda install -c gpuci gpuci-tools
 
-RUN gpuci_conda_retry install -c conda-forge mamba conda-merge
+RUN gpuci_conda_retry install -c conda-forge mamba conda-merge "conda>=4.14"
 
 RUN cat /rapids.yml \
     | sed -r "s/CUDA_VER/${CUDA_VER}/g" \
