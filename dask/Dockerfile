@@ -27,7 +27,6 @@ RUN cat /rapids.yml \
 
 # need to unpin numpy & pyarrow in python 3.8 environment
 RUN cat /dask.yml \
-    | sed -r "s/numpy=/numpy>=/g" \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     > dask_unpinned.yml
 
