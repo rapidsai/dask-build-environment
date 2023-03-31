@@ -30,11 +30,11 @@ esac
 
 # Setup BUILD_ARGS
 case $RAPIDS_VER in
-  "23.02")
-    UCX_PY_VER="0.30"
-    ;;
   "23.04")
     UCX_PY_VER="0.31"
+    ;;
+  "23.06")
+    UCX_PY_VER="0.32"
     ;;
   *)
     echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
