@@ -13,7 +13,4 @@ dependencies:
 - numpy>=NUMPY_VER
 - ucx-proc=*=gpu
 - ucx-py=UCX_PY_VER
-- xgboost=*=cuda_*
-# TODO: remove once cuML is using consolidated RAFT packages
-- libfaiss>=1.7.1
-- faiss-proc=*=cuda
+- xgboost=*rapidsaiRAPIDS_VER
