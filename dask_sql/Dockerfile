@@ -31,9 +31,10 @@ RUN cat /rapids.yml \
     | sed -r "s/NUMPY_VER/${NUMPY_VER}/g" \
     > /rapids_pinned.yml
 
-# need to unpin dask & pyarrow in python 3.8 environment
+# need to unpin dask, pyarrow, and uvicorn in python 3.8 environment
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
+    | sed -r "s/uvicorn=/uvicorn>=/g" \
     | sed -r "s/dask=/dask>=/g" \
     > /dask_unpinned.yml
 
