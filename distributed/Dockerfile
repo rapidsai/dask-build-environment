@@ -4,7 +4,7 @@ ARG LINUX_VER=ubuntu18.04
 FROM gpuci/miniforge-cuda:$CUDA_VER-devel-$LINUX_VER
 
 ARG CUDA_VER=11.2
-ARG PYTHON_VER=3.8
+ARG PYTHON_VER=3.9
 ARG NUMPY_VER=1.20.1
 ARG RAPIDS_VER=21.08
 ARG UCX_PY_VER=0.21
@@ -25,7 +25,7 @@ RUN cat /rapids.yml \
     | sed -r "s/NUMPY_VER/${NUMPY_VER}/g" \
     > /rapids_pinned.yml
 
-# need to unpin pyarrow in python 3.8 environment
+# need to unpin pyarrow in python 3.9 environment
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     > dask_unpinned.yml
