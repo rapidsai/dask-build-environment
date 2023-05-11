@@ -25,4 +25,4 @@ excludes:
 
   # 23.04 nightlies weren't built for python 3.9
   - PYTHON_VER: '3.9'
-  - RAPIDS_VER: '23.04'
+    RAPIDS_VER: '23.04'
