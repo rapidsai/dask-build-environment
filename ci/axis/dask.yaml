@@ -22,7 +22,3 @@ excludes:
   # dask-image gpuCI isn't dependent on RAPIDS
   - BUILD_NAME: dask_image
     RAPIDS_VER: '23.06'
-
-  # 23.06 nightlies weren't built for python 3.9
-  - PYTHON_VER: '3.9'
-    RAPIDS_VER: '23.06'
