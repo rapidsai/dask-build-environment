@@ -4,11 +4,13 @@ channels:
 - rapidsai-nightly
 - conda-forge
 - nvidia
+- pytorch
 dependencies:
 - cudatoolkit=CUDA_VER
 - cudf=RAPIDS_VER
 - numpy>=NUMPY_VER
 - cupy
 - pynvml
+- pytorch=*=*cudaCUDA_VER*
 - ucx-proc=*=gpu
 - ucx-py=UCX_PY_VER
