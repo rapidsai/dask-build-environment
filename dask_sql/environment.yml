@@ -13,4 +13,5 @@ dependencies:
 - numpy>=NUMPY_VER
 - ucx-proc=*=gpu
 - ucx-py=UCX_PY_VER
-- xgboost=*=rapidsai*
+- xgboost=*=rapidsai_*
+- libxgboost=*=rapidsai_*
