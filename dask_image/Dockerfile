@@ -29,8 +29,8 @@ RUN conda-merge /rapids_pinned.yml /dask.yml > /dask_image.yml
 RUN rapids-mamba-retry env create -n dask_image --file /dask_image.yml
 
 # Clean up pkgs to reduce image size and chmod for all users
-RUN chmod -R ugo+w /opt/conda \
+RUN chmod -R ugo+rw /opt/conda \
     && conda clean -tipy \
-    && chmod -R ugo+w /opt/conda
+    && chmod -R ugo+rw /opt/conda
 
 CMD [ "/bin/bash" ]

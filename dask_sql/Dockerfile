@@ -16,7 +16,7 @@ ENV RUSTUP_HOME="/opt/rustup"
 ENV CARGO_HOME="/opt/cargo"
 ADD https://sh.rustup.rs /rustup-init.sh
 RUN sh /rustup-init.sh -y --default-toolchain=stable --profile=minimal -c rustfmt \
-    && chmod -R ugo+w /opt/cargo /opt/rustup
+    && chmod -R ugo+rw /opt/cargo /opt/rustup
 
 COPY environment.yml /rapids.yml
 ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask.yml
@@ -48,8 +48,8 @@ RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask_sql.yml
 RUN rapids-mamba-retry env create -n dask_sql --file /dask_sql.yml
 
 # Clean up pkgs to reduce image size and chmod for all users
-RUN chmod -R ugo+w /opt/conda \
+RUN chmod -R ugo+rw /opt/conda \
     && conda clean -tipy \
-    && chmod -R ugo+w /opt/conda
+    && chmod -R ugo+rw /opt/conda
 
 CMD [ "/bin/bash" ]
