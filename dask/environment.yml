@@ -8,7 +8,6 @@ dependencies:
 - cudatoolkit=CUDA_VER
 - cudf=RAPIDS_VER
 - dask-cudf=RAPIDS_VER
-- numpy>=NUMPY_VER
 - cupy
 - pynvml
 - ucx-proc=*=gpu
