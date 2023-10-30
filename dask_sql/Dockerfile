@@ -9,6 +9,9 @@ ARG PYTHON_VER=3.9
 ARG RAPIDS_VER=23.12
 ARG UCX_PY_VER=0.35
 
+RUN apt-get update \
+    && apt-get install -y wget
+
 ENV RUSTUP_HOME="/opt/rustup"
 ENV CARGO_HOME="/opt/cargo"
 ADD https://sh.rustup.rs /rustup-init.sh
