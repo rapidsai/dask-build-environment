@@ -6,6 +6,7 @@ channels:
 - nvidia
 - pytorch
 dependencies:
+- c-compiler  # needed for source installation of crick
 - cudatoolkit=CUDA_VER
 - cudf=RAPIDS_VER
 - dask-cudf=RAPIDS_VER
