@@ -37,6 +37,7 @@ RUN cat /rapids.yml \
 
 # need to unpin dask, pyarrow, and uvicorn in python 3.9 environment
 RUN cat /dask.yml \
+    | sed -r "s/libprotobuf=/libprotobuf>=/g" \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     | sed -r "s/uvicorn=/uvicorn>=/g" \
     | sed -r "s/dask=/dask>=/g" \
