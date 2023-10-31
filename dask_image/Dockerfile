@@ -34,6 +34,6 @@ RUN chmod -R ugo+w /opt/conda \
     && chmod -R ugo+w /opt/conda
 
 # need a user with access to conda
-RUN useradd -g conda dask
+RUN useradd -r -g conda -u 10000 dask
 
 CMD [ "/bin/bash" ]
