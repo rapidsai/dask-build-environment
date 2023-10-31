@@ -33,4 +33,7 @@ RUN chmod -R ugo+w /opt/conda \
     && conda clean -tipy \
     && chmod -R ugo+w /opt/conda
 
+# need a user with access to conda
+RUN useradd -g conda dask
+
 CMD [ "/bin/bash" ]
