@@ -15,10 +15,10 @@ LINUX_VER:
   - ubuntu20.04
 
 RAPIDS_VER:
-  - '23.10'
   - '23.12'
+  - '23.12.00'
 
 excludes:
   # dask-image gpuCI isn't dependent on RAPIDS
   - BUILD_NAME: dask_image
-    RAPIDS_VER: '23.10'
+    RAPIDS_VER: '23.12'
