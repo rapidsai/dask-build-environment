@@ -19,7 +19,7 @@ RUN sh /rustup-init.sh -y --default-toolchain=stable --profile=minimal -c rustfm
     && chmod -R ugo+rw /opt/cargo /opt/rustup
 
 COPY environment.yml /rapids.yml
-ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER-dev.yaml /dask.yml
+ADD https://raw.githubusercontent.com/dask-contrib/dask-sql/main/continuous_integration/environment-$PYTHON_VER.yaml /dask.yml
 
 ADD https://github.com/rapidsai/gha-tools/releases/latest/download/tools.tar.gz /tools.tar.gz
 RUN tar -xzvf /tools.tar.gz -C /usr/local/bin --strip-components=1 \
