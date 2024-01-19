@@ -35,12 +35,13 @@ RUN cat /rapids.yml \
     | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g" \
     > /rapids_pinned.yml
 
-# need to unpin dask, pyarrow, and uvicorn in python 3.9 environment
+# unpin problematic CI dependencies
 RUN cat /dask.yml \
-    | sed -r "s/libprotobuf=/libprotobuf>=/g" \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     | sed -r "s/uvicorn=/uvicorn>=/g" \
     | sed -r "s/dask=/dask>=/g" \
+    | sed -r "s/numpy=/numpy>=/g" \
+    | sed -r "s/mlflow=/mlflow>=/g" \
     > /dask_unpinned.yml
 
 RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask_sql.yml
