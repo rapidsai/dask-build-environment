@@ -27,7 +27,7 @@ RUN tar -xzvf /tools.tar.gz -C /usr/local/bin --strip-components=1 \
 
 RUN conda config --set ssl_verify false
 
-RUN rapids-mamba-retry install conda-merge git 
+RUN rapids-mamba-retry install conda-merge git
 
 RUN cat /rapids.yml \
     | sed -r "s/CUDA_VER/$(echo $CUDA_VER | cut -d. -f1,2)/g" \
