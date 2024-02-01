@@ -26,9 +26,10 @@ RUN cat /rapids.yml \
     | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g" \
     > /rapids_pinned.yml
 
-# need to unpin numpy & pyarrow in python 3.8 environment
+# unpin problematic CI dependencies
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
+    | sed -r "s/pandas=/pandas>=/g" \
     > dask_unpinned.yml
 
 RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask.yml
