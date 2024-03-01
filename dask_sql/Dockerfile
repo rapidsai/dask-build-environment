@@ -43,6 +43,7 @@ RUN cat /dask.yml \
     | sed -r "s/pandas=/pandas>=/g" \
     | sed -r "s/numpy=/numpy>=/g" \
     | sed -r "s/mlflow=/mlflow>=/g" \
+    | sed -r "s/py-xgboost=/py-xgboost>=/g" \
     > /dask_unpinned.yml
 
 RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask_sql.yml
