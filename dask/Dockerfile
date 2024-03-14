@@ -30,6 +30,7 @@ RUN cat /rapids.yml \
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     | sed -r "s/pandas=/pandas>=/g" \
+    | sed -r "s/numpy=/numpy>=/g" \
     > dask_unpinned.yml
 
 RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask.yml
