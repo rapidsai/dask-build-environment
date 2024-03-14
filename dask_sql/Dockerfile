@@ -39,7 +39,6 @@ RUN cat /rapids.yml \
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     | sed -r "s/uvicorn=/uvicorn>=/g" \
-    | sed -r "s/dask=/dask>=/g" \
     | sed -r "s/pandas=/pandas>=/g" \
     | sed -r "s/numpy=/numpy>=/g" \
     | sed -r "s/mlflow=/mlflow>=/g" \
