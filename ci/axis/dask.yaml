@@ -10,6 +10,7 @@ CUDA_VER:
 PYTHON_VER:
   - '3.9'
   - '3.10'
+  - '3.11'
 
 LINUX_VER:
   - ubuntu20.04
