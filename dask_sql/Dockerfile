@@ -15,7 +15,7 @@ RUN apt-get update \
 ENV RUSTUP_HOME="/opt/rustup"
 ENV CARGO_HOME="/opt/cargo"
 ADD https://sh.rustup.rs /rustup-init.sh
-RUN sh /rustup-init.sh -y --default-toolchain=stable --profile=minimal -c rustfmt \
+RUN sh /rustup-init.sh -y --default-toolchain=1.72 --profile=minimal -c rustfmt \
     && chmod -R ugo+rw /opt/cargo /opt/rustup
 
 COPY environment.yml /rapids.yml
