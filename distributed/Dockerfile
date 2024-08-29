@@ -1,11 +1,11 @@
 ARG CUDA_VER=11.8.0
 ARG LINUX_VER=ubuntu20.04
-ARG PYTHON_VER=3.9
+ARG PYTHON_VER=3.10
 
 FROM rapidsai/miniforge-cuda:cuda$CUDA_VER-base-$LINUX_VER-py$PYTHON_VER
 
 ARG CUDA_VER=11.8.0
-ARG PYTHON_VER=3.9
+ARG PYTHON_VER=3.10
 ARG RAPIDS_VER=23.12
 ARG UCX_PY_VER=0.35
 
@@ -26,7 +26,7 @@ RUN cat /rapids.yml \
     | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g" \
     > /rapids_pinned.yml
 
-# need to unpin pyarrow in python 3.9 environment
+# unpin problematic CI dependencies
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
     > dask_unpinned.yml
