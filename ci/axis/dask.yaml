@@ -1,7 +1,6 @@
 BUILD_NAME:
   - dask
   - distributed
-  - dask_sql
   - dask_image
 
 CUDA_VER:
