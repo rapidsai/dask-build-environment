@@ -1,11 +1,11 @@
-ARG CUDA_VER=11.8.0
-ARG LINUX_VER=ubuntu20.04
-ARG PYTHON_VER=3.10
+ARG CUDA_VER=unset
+ARG LINUX_VER=unset
+ARG PYTHON_VER=unset
 
 FROM rapidsai/miniforge-cuda:cuda$CUDA_VER-base-$LINUX_VER-py$PYTHON_VER
 
-ARG CUDA_VER=11.8.0
-ARG PYTHON_VER=3.10
+ARG CUDA_VER=unset
+ARG PYTHON_VER=unset
 # RAPIDS_VER isn't used but is part of the matrix so must be included
 ARG RAPIDS_VER=23.12
 

@@ -11,10 +11,10 @@ jobs:
     if: github.repository == 'rapidsai/dask-build-environment'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Parse current axis YAML
-        uses: the-coding-turtle/ga-yaml-parser@v0.1.1
+        uses: the-coding-turtle/ga-yaml-parser@v0.1.2
         with:
           file: ci/axis/dask.yaml
 
@@ -58,7 +58,7 @@ jobs:
           regex: false
 
       - name: Update old RAPIDS versions
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           include: 'ci/**'
           find: "${{ env.OLD_RAPIDS_VER }}"
@@ -66,7 +66,7 @@ jobs:
           regex: false
 
       - name: Update new UCX-Py versions
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           include: 'ci/**'
           find: "${{ env.UCX_PY_VER }}"
@@ -74,7 +74,7 @@ jobs:
           regex: false
 
       - name: Update old UCX-Py versions
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           include: 'ci/**'
           find: "${{ env.OLD_UCX_PY_VER }}"
@@ -83,7 +83,7 @@ jobs:
 
       - name: Create pull request
         if: ${{ env.RAPIDS_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Update gpuCI `RAPIDS_VER` to `${{ env.NEW_RAPIDS_VER }}`, `UCX_PY_VER` to `${{ env.NEW_UCX_PY_VER }}`"

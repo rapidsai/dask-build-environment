@@ -29,18 +29,7 @@ case ${BUILD_NAME} in
 esac
 
 # Setup BUILD_ARGS
-case $RAPIDS_VER in
-  "24.08")
-    UCX_PY_VER="0.39"
-    ;;
-  "24.10")
-    UCX_PY_VER="0.40"
-    ;;
-  *)
-    echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
-    exit 1
-    ;;
-esac
+UCX_PY_VER="$(curl -sL https://version.gpuci.io/rapids/${RAPIDS_VER})"
 BUILD_IMAGE="gpuci/${BUILD_NAME}"
 BUILD_DIR="${WORKSPACE}/${BUILD_NAME}"
 
