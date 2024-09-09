@@ -6,8 +6,6 @@ FROM rapidsai/miniforge-cuda:cuda$CUDA_VER-base-$LINUX_VER-py$PYTHON_VER
 
 ARG CUDA_VER=unset
 ARG PYTHON_VER=unset
-# RAPIDS_VER isn't used but is part of the matrix so must be included
-ARG RAPIDS_VER=23.12
 
 COPY environment.yml /rapids.yml
 ADD https://raw.githubusercontent.com/dask/dask-image/main/continuous_integration/environment-$PYTHON_VER.yml /dask.yml
