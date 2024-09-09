@@ -29,18 +29,7 @@ case ${BUILD_NAME} in
 esac
 
 # Setup BUILD_ARGS
-case $RAPIDS_VER in
-  "24.08")
-    UCX_PY_VER="0.39"
-    ;;
-  "24.10")
-    UCX_PY_VER="0.40"
-    ;;
-  *)
-    echo "Unrecognized RAPIDS_VER: ${RAPIDS_VER}"
-    exit 1
-    ;;
-esac
+UCX_PY_VER="$(curl -sL https://version.gpuci.io/rapids/${RAPIDS_VER})"
 BUILD_IMAGE="gpuci/${BUILD_NAME}"
 BUILD_DIR="${WORKSPACE}/${BUILD_NAME}"
 
@@ -48,7 +37,7 @@ BUILD_DIR="${WORKSPACE}/${BUILD_NAME}"
 case ${BUILD_NAME} in
   "dask_image")  # doesn't depend on RAPIDS / ucx-py for gpuCI
     BUILD_TAG="cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"
-    BUILD_ARGS="--squash --build-arg RAPIDS_VER=$RAPIDS_VER --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
+    BUILD_ARGS="--squash --build-arg CUDA_VER=$CUDA_VER --build-arg LINUX_VER=$LINUX_VER --build-arg PYTHON_VER=$PYTHON_VER"
     ;;
   *)
     BUILD_TAG="${RAPIDS_VER}-cuda${CUDA_VER}-devel-${LINUX_VER}-py${PYTHON_VER}"

@@ -1,13 +1,13 @@
-ARG CUDA_VER=11.8.0
-ARG LINUX_VER=ubuntu20.04
-ARG PYTHON_VER=3.10
+ARG CUDA_VER=unset
+ARG LINUX_VER=unset
+ARG PYTHON_VER=unset
 
 FROM rapidsai/miniforge-cuda:cuda$CUDA_VER-base-$LINUX_VER-py$PYTHON_VER
 
-ARG CUDA_VER=11.8.0
-ARG PYTHON_VER=3.10
-ARG RAPIDS_VER=23.12
-ARG UCX_PY_VER=0.35
+ARG CUDA_VER=unset
+ARG PYTHON_VER=unset
+ARG RAPIDS_VER=unset
+ARG UCX_PY_VER=unset
 
 COPY environment.yml /rapids.yml
 ADD https://raw.githubusercontent.com/dask/dask/main/continuous_integration/environment-$PYTHON_VER.yaml /dask.yml
