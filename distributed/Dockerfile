@@ -29,7 +29,7 @@ RUN cat /rapids.yml \
 # unpin problematic CI dependencies
 RUN cat /dask.yml \
     | sed -r "s/pyarrow=/pyarrow>=/g" \
-    > dask_unpinned.yml
+    > /dask_unpinned.yml
 
 RUN conda-merge /rapids_pinned.yml /dask_unpinned.yml > /distributed.yml
 
