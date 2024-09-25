@@ -17,6 +17,8 @@ jobs:
         uses: the-coding-turtle/ga-yaml-parser@v0.1.2
         with:
           file: ci/axis/dask.yaml
+          export_to_envs: true
+          return_to_outputs: false
 
       - name: Get old RAPIDS / UCX-Py versions
         run: |
