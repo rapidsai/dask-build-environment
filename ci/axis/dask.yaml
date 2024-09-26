@@ -15,13 +15,13 @@ LINUX_VER:
   - ubuntu20.04
 
 RAPIDS_VER:
-  - '24.08'
   - '24.10'
+  - '24.12'
 
 excludes:
   # dask-image gpuCI isn't dependent on RAPIDS
   - BUILD_NAME: dask_image
-    RAPIDS_VER: '24.08'
-  # Python 3.12 support was first added in RAPIDS 24.10
+    RAPIDS_VER: '24.10'
+  # Python 3.12 support was first added in RAPIDS 24.12
   - PYTHON_VER: '3.12'
-    RAPIDS_VER: '24.08'
+    RAPIDS_VER: '24.10'
