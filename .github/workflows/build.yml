@@ -1,0 +1,91 @@
+name: Docker build
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "*"
+  pull_request:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        cuda: ["11.8.0"]
+        python: ["3.10", "3.11", "3.12"]
+        linux: ["ubuntu20.04"]
+        rapids: ["24.10", "24.12"]
+        image:
+          - tag: "gpuci/dask"
+            context: "./dask"
+          - tag: "gpuci/distributed"
+            context: "./distributed"
+          - tag: "gpuci/dask_image"
+            context: "./dask_image"
+        # dask-image gpuCI isn't dependent on RAPIDS
+        exclude:
+          - image: "gpuci/dask_image"
+            rapids: "24.10"
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        if: github.repository == 'rapidsai/dask-build-environment' && github.event_name == 'push'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Compute ucx-py version
+        id: ucx_py
+        env:
+          rapids: ${{ matrix.rapids }}
+        run: |
+          echo "version=$(curl -sL https://version.gpuci.io/rapids/${rapids})" >> $GITHUB_ENV
+
+      - name: Generate tag
+        id: tag
+        env:
+          cuda: ${{ matrix.cuda }}
+          python: ${{ matrix.python }}
+          linux: ${{ matrix.linux }}
+          rapids: ${{ matrix.rapids }}
+          image: ${{ matrix.image.tag }}
+        run: |
+          case ${image} in
+            "gpuci/dask_image")  # doesn't depend on RAPIDS / ucx-py for gpuCI
+              tag="${image}:cuda${cuda}-devel-${linux}-py${python}"
+              ;;
+            *)
+              tag="${image}:${rapids}-cuda${cuda}-devel-${linux}-py${python}"
+              ;;
+          esac
+
+          echo "tag=${tag}" >> $GITHUB_OUTPUT
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.image.context }}
+          push: ${{ github.repository == 'rapidsai/dask-build-environment' && github.event_name == 'push' }}
+          platforms: linux/amd64
+          tags: ${{ steps.tag.outputs.tag }}
+          build-args: |
+            RAPIDS_VER=${{ matrix.rapids }}
+            UCX_PY_VER=${{ steps.ucx_py.outputs.version }}
+            CUDA_VER=${{ matrix.cuda }}
+            LINUX_VER=${{ matrix.linux }}
+            PYTHON_VER=${{ matrix.python }}
+
+      - name: Report
+        run: echo Built ${{ steps.tag.outputs.tag }}
