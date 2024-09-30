@@ -58,10 +58,11 @@ jobs:
           echo "NEW_UCX_PY_VER=$(echo $FULL_UCX_PY_VER | cut -d'.' -f1,2)" >> $GITHUB_ENV
 
       - name: Update new RAPIDS versions
-        uses: jacobtomlinson/gha-find-replace@v2
+        uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "${{ env.RAPIDS_VER }}"
           replace: "${{ env.NEW_RAPIDS_VER }}"
+          include: ".github/workflows/build.yml"
           regex: false
 
       - name: Update old RAPIDS versions
@@ -69,6 +70,7 @@ jobs:
         with:
           find: "${{ env.OLD_RAPIDS_VER }}"
           replace: "${{ env.RAPIDS_VER }}"
+          include: ".github/workflows/build.yml"
           regex: false
 
       - name: Update new UCX-Py versions
@@ -76,6 +78,7 @@ jobs:
         with:
           find: "${{ env.UCX_PY_VER }}"
           replace: "${{ env.NEW_UCX_PY_VER }}"
+          include: ".github/workflows/build.yml"
           regex: false
 
       - name: Update old UCX-Py versions
@@ -83,6 +86,7 @@ jobs:
         with:
           find: "${{ env.OLD_UCX_PY_VER }}"
           replace: "${{ env.UCX_PY_VER }}"
+          include: ".github/workflows/build.yml"
           regex: false
 
       - name: Create pull request
