@@ -21,15 +21,15 @@ jobs:
         linux: ["ubuntu20.04"]
         rapids: ["24.10", "24.12"]
         image:
-          - tag: "gpuci/dask"
+          - tag: "rapidsai/dask"
             context: "./dask"
-          - tag: "gpuci/distributed"
+          - tag: "rapidsai/distributed"
             context: "./distributed"
-          - tag: "gpuci/dask_image"
+          - tag: "rapidsai/dask_image"
             context: "./dask_image"
         # dask-image gpuCI isn't dependent on RAPIDS
         exclude:
-          - image: "gpuci/dask_image"
+          - image: "rapidsai/dask_image"
             rapids: "24.10"
 
     steps:
@@ -63,7 +63,7 @@ jobs:
           image: ${{ matrix.image.tag }}
         run: |
           case ${image} in
-            "gpuci/dask_image")  # doesn't depend on RAPIDS / ucx-py for gpuCI
+            "rapidsai/dask_image")  # doesn't depend on RAPIDS / ucx-py for gpuCI
               tag="${image}:cuda${cuda}-devel-${linux}-py${python}"
               ;;
             *)
