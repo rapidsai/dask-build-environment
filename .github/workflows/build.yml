@@ -90,4 +90,4 @@ jobs:
             PYTHON_VER=${{ matrix.python }}
 
       - name: Report
-        run: echo Built ${{ steps.tag.outputs.tag }}
+        run: echo "Built image '${{ steps.tag.outputs.tag }}'"
