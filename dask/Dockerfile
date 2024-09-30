@@ -23,10 +23,10 @@ RUN <<EOT
     | sed -r "s/RAPIDS_VER/${RAPIDS_VER}/g" \
     | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g" \
     > /rapids_pinned.yml
-  cat /dask.yml
-    | sed -r "s/pyarrow=/pyarrow>=/g"
-    | sed -r "s/pandas=/pandas>=/g"
-    | sed -r "s/numpy=/numpy>=/g"
+  cat /dask.yml \
+    | sed -r "s/pyarrow=/pyarrow>=/g" \
+    | sed -r "s/pandas=/pandas>=/g" \
+    | sed -r "s/numpy=/numpy>=/g" \
     > /dask_unpinned.yml
   conda-merge /rapids_pinned.yml /dask_unpinned.yml > /dask.yml
   rapids-mamba-retry env create -n dask --file /dask.yml
