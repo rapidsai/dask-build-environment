@@ -32,7 +32,8 @@ jobs:
             context: "./dask_image"
         # dask-image gpuCI isn't dependent on RAPIDS
         exclude:
-          - image: "rapidsai/dask_image"
+          - image:
+              tag: "rapidsai/dask_image"
             rapids: "24.10"
 
     steps:
