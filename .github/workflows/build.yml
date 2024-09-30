@@ -23,6 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        platform: ["linux/amd64"]
         cuda: ["11.8.0"]
         python: ["3.10", "3.11", "3.12"]
         linux: ["ubuntu20.04"]
@@ -79,7 +80,7 @@ jobs:
         with:
           context: ${{ matrix.image.context }}
           push: ${{ env.push == 'true' }}
-          platforms: linux/amd64
+          platforms: ${{ matrix.platform }}
           tags: ${{ steps.tag.outputs.tag }}
           build-args: |
             RAPIDS_VER=${{ matrix.rapids }}
