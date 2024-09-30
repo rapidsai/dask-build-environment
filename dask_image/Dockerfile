@@ -16,8 +16,8 @@ RUN <<EOT
   rm /tools.tar.gz
   conda config --set ssl_verify false
   rapids-mamba-retry install conda-merge git
-  cat /rapids.yml
-    | sed -r "s/CUDA_VER/$(echo $CUDA_VER | cut -d. -f1,2)/g"
+  cat /rapids.yml \
+    | sed -r "s/CUDA_VER/$(echo $CUDA_VER | cut -d. -f1,2)/g" \
     > /rapids_pinned.yml
   conda-merge /rapids_pinned.yml /dask.yml > /dask_image.yml
   rapids-mamba-retry env create -n dask_image --file /dask_image.yml

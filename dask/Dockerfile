@@ -18,10 +18,10 @@ RUN <<EOT
   rm /tools.tar.gz
   conda config --set ssl_verify false
   rapids-mamba-retry install conda-merge git
-  cat /rapids.yml
-    | sed -r "s/CUDA_VER/$(echo $CUDA_VER | cut -d. -f1,2)/g"
-    | sed -r "s/RAPIDS_VER/${RAPIDS_VER}/g"
-    | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g"
+  cat /rapids.yml \
+    | sed -r "s/CUDA_VER/$(echo $CUDA_VER | cut -d. -f1,2)/g" \
+    | sed -r "s/RAPIDS_VER/${RAPIDS_VER}/g" \
+    | sed -r "s/UCX_PY_VER/${UCX_PY_VER}/g" \
     > /rapids_pinned.yml
   cat /dask.yml
     | sed -r "s/pyarrow=/pyarrow>=/g"
