@@ -44,7 +44,7 @@ jobs:
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
-        if: env.push
+        if: ${{ env.push == true }}
         with:
           username: ${{ secrets.GPUCIBOT_DOCKERHUB_USER }}
           password: ${{ secrets.GPUCIBOT_DOCKERHUB_TOKEN }}
@@ -80,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ${{ matrix.image.context }}
-          push: ${{ env.push }}
+          push: ${{ env.push == true }}
           platforms: linux/amd64
           tags: ${{ steps.tag.outputs.tag }}
           build-args: |
