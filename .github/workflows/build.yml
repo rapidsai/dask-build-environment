@@ -51,7 +51,7 @@ jobs:
         env:
           rapids: ${{ matrix.rapids }}
         run: |
-          echo "version=$(curl -sL https://version.gpuci.io/rapids/${rapids})" >> $GITHUB_ENV
+          echo "version=$(curl -sL https://version.gpuci.io/rapids/${rapids})" >> $GITHUB_OUTPUT
 
       - name: Generate tag
         id: tag
