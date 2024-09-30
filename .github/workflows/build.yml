@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 env:
-  push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["push", "schedule", "workflow_dispatch"]'), github.event_name) }}
+  push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["pull_request"]'), github.event_name) }}
 
 jobs:
   docker:
