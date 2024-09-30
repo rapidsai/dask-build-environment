@@ -23,13 +23,15 @@ jobs:
 
       - name: Get old RAPIDS / UCX-Py versions
         env:
-          OLD_RAPIDS_VER: ${{ steps.parse_yaml.outputs.jobs_docker_strategy_matrix_rapids_0 }}
-          RAPIDS_VER: ${{ steps.parse_yaml.outputs.jobs_docker_strategy_matrix_rapids_1 }}
+          OLD_RAPIDS_VER: ${{ steps.parse_yaml.outputs.env_OLD_RAPIDS_VER }}
+          OLD_UCX_PY_VER: ${{ steps.parse_yaml.outputs.env_OLD_UCX_PY_VER }}
+          RAPIDS_VER: ${{ steps.parse_yaml.outputs.env_RAPIDS_VER }}
+          UCX_PY_VER: ${{ steps.parse_yaml.outputs.env_UCX_PY_VER }}
         run: |
           echo OLD_RAPIDS_VER=$OLD_RAPIDS_VER >> $GITHUB_ENV
-          echo OLD_UCX_PY_VER=$(curl -sL https://version.gpuci.io/rapids/$OLD_RAPIDS_VER) >> $GITHUB_ENV
+          echo OLD_UCX_PY_VER=$OLD_UCX_PY_VER >> $GITHUB_ENV
           echo RAPIDS_VER=$RAPIDS_VER >> $GITHUB_ENV
-          echo UCX_PY_VER=$(curl -sL https://version.gpuci.io/rapids/$RAPIDS_VER) >> $GITHUB_ENV
+          echo UCX_PY_VER=$UCX_PY_VER >> $GITHUB_ENV
 
       - name: Get latest cuDF nightly version
         id: cudf_latest

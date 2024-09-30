@@ -11,6 +11,10 @@ on:
 
 env:
   push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["push", "schedule", "workflow_dispatch"]'), github.event_name) }}
+  OLD_RAPIDS_VER: "24.10"
+  OLD_UCX_PY_VER: "0.40"
+  RAPIDS_VER: "24.12"
+  UCX_PY_VER: "0.41"
 
 jobs:
   docker:
@@ -22,7 +26,7 @@ jobs:
         cuda: ["11.8.0"]
         python: ["3.10", "3.11", "3.12"]
         linux: ["ubuntu20.04"]
-        rapids: ["24.10", "24.12"]
+        rapids: [${{ env.OLD_RAPIDS_VER }}, ${{ env.RAPIDS_VER }}]
         image:
           - tag: "rapidsai/dask"
             context: "./dask"
@@ -34,7 +38,7 @@ jobs:
         exclude:
           - image:
               tag: "rapidsai/dask_image"
-            rapids: "24.10"
+            rapids: ${{ env.OLD_RAPIDS_VER }}
 
     steps:
       - name: Checkout
@@ -49,13 +53,6 @@ jobs:
         with:
           username: ${{ secrets.GPUCIBOT_DOCKERHUB_USER }}
           password: ${{ secrets.GPUCIBOT_DOCKERHUB_TOKEN }}
-
-      - name: Compute ucx-py version
-        id: ucx_py
-        env:
-          rapids: ${{ matrix.rapids }}
-        run: |
-          echo "version=$(curl -sL https://version.gpuci.io/rapids/${rapids})" >> $GITHUB_OUTPUT
 
       - name: Generate tag
         id: tag
@@ -86,7 +83,7 @@ jobs:
           tags: ${{ steps.tag.outputs.tag }}
           build-args: |
             RAPIDS_VER=${{ matrix.rapids }}
-            UCX_PY_VER=${{ steps.ucx_py.outputs.version }}
+            UCX_PY_VER=${{ matrix.rapids == env.OLD_RAPIDS_VER && env.OLD_UCX_PY_VER || env.UCX_PY_VER }}
             CUDA_VER=${{ matrix.cuda }}
             LINUX_VER=${{ matrix.linux }}
             PYTHON_VER=${{ matrix.python }}
