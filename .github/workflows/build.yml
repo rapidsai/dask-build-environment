@@ -13,8 +13,8 @@ env:
   push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["push", "schedule", "workflow_dispatch"]'), github.event_name) }}
   OLD_RAPIDS_VER: "24.10"
   OLD_UCX_PY_VER: "0.40"
-  RAPIDS_VER: "24.12"
-  UCX_PY_VER: "0.41"
+  CURRENT_RAPIDS_VER: "24.12"
+  CURRENT_UCX_PY_VER: "0.41"
 
 jobs:
   docker:
@@ -27,7 +27,7 @@ jobs:
         cuda: ["11.8.0"]
         python: ["3.10", "3.11", "3.12"]
         linux: ["ubuntu20.04"]
-        rapids: ${{ fromJSON('["$OLD_RAPIDS_VER", "$RAPIDS_VER"]') }}
+        rapids: ["old", "current"]
         image:
           - tag: "rapidsai/dask"
             context: "./dask"
@@ -39,11 +39,27 @@ jobs:
         exclude:
           - image:
               tag: "rapidsai/dask_image"
-            rapids: ${{ env.OLD_RAPIDS_VER }}
+            rapids: "old"
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Compute RAPIDS / UCX-Py versions
+        run: |
+          case ${{ matrix.rapids }} in
+            "old")
+              rapids_ver=${{ env.OLD_RAPIDS_VER }}
+              ucx_py_ver=${{ env.OLD_UCX_PY_VER }}
+              ;;
+            *)
+              rapids_ver=${{ env.CURRENT_RAPIDS_VER }}
+              ucx_py_ver=${{ env.CURRENT_UCX_PY_VER }}
+              ;;
+          esac
+
+          echo "RAPIDS_VER=${rapids_ver}" >> $GITHUB_ENV
+          echo "UCX_PY_VER=${ucx_py_ver}" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -61,7 +77,7 @@ jobs:
           cuda: ${{ matrix.cuda }}
           python: ${{ matrix.python }}
           linux: ${{ matrix.linux }}
-          rapids: ${{ matrix.rapids }}
+          rapids: ${{ env.RAPIDS_VER }}
           image: ${{ matrix.image.tag }}
         run: |
           case ${image} in
@@ -83,8 +99,8 @@ jobs:
           platforms: ${{ matrix.platform }}
           tags: ${{ steps.tag.outputs.tag }}
           build-args: |
-            RAPIDS_VER=${{ matrix.rapids }}
-            UCX_PY_VER=${{ matrix.rapids == env.OLD_RAPIDS_VER && env.OLD_UCX_PY_VER || env.UCX_PY_VER }}
+            RAPIDS_VER=${{ env.RAPIDS_VER }}
+            UCX_PY_VER=${{ env.UCX_PY_VER }}
             CUDA_VER=${{ matrix.cuda }}
             LINUX_VER=${{ matrix.linux }}
             PYTHON_VER=${{ matrix.python }}
