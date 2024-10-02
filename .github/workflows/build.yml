@@ -1,4 +1,4 @@
-name: Docker build
+name: Docker build & publish
 
 on:
   push:
@@ -11,13 +11,14 @@ on:
 
 env:
   push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["push", "schedule", "workflow_dispatch"]'), github.event_name) }}
-  OLD_RAPIDS_VER: "24.10"
-  OLD_UCX_PY_VER: "0.40"
-  CURRENT_RAPIDS_VER: "24.12"
-  CURRENT_UCX_PY_VER: "0.41"
+  STABLE_RAPIDS_VER: "24.10"
+  STABLE_UCX_PY_VER: "0.40"
+  NIGHTLY_RAPIDS_VER: "24.12"
+  NIGHTLY_UCX_PY_VER: "0.41"
 
 jobs:
   docker:
+    name: ${{ matrix.image.tag }} (${{ matrix.rapids }} RAPIDS, python ${{ matrix.python }}, CTK ${{ matrix.cuda }}, ${{ matrix.linux }}, ${{ matrix.platform }})
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,7 +28,7 @@ jobs:
         cuda: ["11.8.0"]
         python: ["3.10", "3.11", "3.12"]
         linux: ["ubuntu20.04"]
-        rapids: ["old", "current"]
+        rapids: ["stable", "nightly"]
         image:
           - tag: "rapidsai/dask"
             context: "./dask"
@@ -39,7 +40,7 @@ jobs:
         exclude:
           - image:
               tag: "rapidsai/dask_image"
-            rapids: "old"
+            rapids: "stable"
 
     steps:
       - name: Checkout
@@ -48,13 +49,17 @@ jobs:
       - name: Compute RAPIDS / UCX-Py versions
         run: |
           case ${{ matrix.rapids }} in
-            "old")
-              rapids_ver=${{ env.OLD_RAPIDS_VER }}
-              ucx_py_ver=${{ env.OLD_UCX_PY_VER }}
+            "stable")
+              rapids_ver=${{ env.STABLE_RAPIDS_VER }}
+              ucx_py_ver=${{ env.STABLE_UCX_PY_VER }}
+              ;;
+            "nightly")
+              rapids_ver=${{ env.NIGHTLY_RAPIDS_VER }}
+              ucx_py_ver=${{ env.NIGHTLY_UCX_PY_VER }}
               ;;
             *)
-              rapids_ver=${{ env.CURRENT_RAPIDS_VER }}
-              ucx_py_ver=${{ env.CURRENT_UCX_PY_VER }}
+              echo "Invalid RAPIDS version '${{ matrix.rapids }}'"
+              exit 1
               ;;
           esac
 
