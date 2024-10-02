@@ -31,7 +31,7 @@ jobs:
           echo OLD_RAPIDS_VER=$OLD_RAPIDS_VER >> $GITHUB_ENV
           echo OLD_UCX_PY_VER=$OLD_UCX_PY_VER >> $GITHUB_E
           echo CURRENT_RAPIDS_VER=$CURRENT_RAPIDS_VER >> $GITHUB_ENV
-          echo UCX_PY_VER=$UCX_PY_VER >> $GITHUB_ENV
+          echo CURRENT_UCX_PY_VER=$CURRENT_UCX_PY_VER >> $GITHUB_ENV
 
       - name: Get latest cuDF nightly version
         id: cudf_latest
@@ -76,7 +76,7 @@ jobs:
       - name: Update new UCX-Py versions
         uses: jacobtomlinson/gha-find-replace@v3
         with:
-          find: "${{ env.UCX_PY_VER }}"
+          find: "${{ env.CURRENT_UCX_PY_VER }}"
           replace: "${{ env.NEW_UCX_PY_VER }}"
           include: ".github/workflows/build.yml"
           regex: false
@@ -85,20 +85,20 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "${{ env.OLD_UCX_PY_VER }}"
-          replace: "${{ env.UCX_PY_VER }}"
+          replace: "${{ env.CURRENT_UCX_PY_VER }}"
           include: ".github/workflows/build.yml"
           regex: false
 
       - name: Create pull request
-        if: ${{ env.CURRENT_RAPIDS_VER != env.NEW_RAPIDS_VER && env.UCX_PY_VER != env.NEW_UCX_PY_VER }}
+        if: ${{ env.CURRENT_RAPIDS_VER != env.NEW_RAPIDS_VER && env.CURRENT_UCX_PY_VER != env.NEW_UCX_PY_VER }}
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Update gpuCI `CURRENT_RAPIDS_VER` to `${{ env.NEW_RAPIDS_VER }}`, `UCX_PY_VER` to `${{ env.NEW_UCX_PY_VER }}`"
-          title: "Update gpuCI `CURRENT_RAPIDS_VER` to `${{ env.NEW_RAPIDS_VER }}`"
+          commit-message: "Update gpuCI `CURRENT_RAPIDS_VER` to `${{ env.NEW_RAPIDS_VER }}`, `CURRENT_UCX_PY_VER` to `${{ env.NEW_UCX_PY_VER }}`"
+          title: "Start building images with RAPIDS `${{ env.NEW_RAPIDS_VER }}`, ucx-py `${{ env.NEW_UCX_PY_VER }}`"
           author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
           branch: "upgrade-gpuci-rapids"
           body: |
             New cuDF and ucx-py nightly versions have been detected.
 
-            Updated `dask.yaml` and `run.sh` to use `CURRENT_RAPIDS_VER=${{ env.NEW_RAPIDS_VER }}` and `UCX_PY_VER=${{ env.NEW_UCX_PY_VER }}`.
+            Updated `.github/workflows/build.yml` to use `CURRENT_RAPIDS_VER=${{ env.NEW_RAPIDS_VER }}` and `CURRENT_UCX_PY_VER=${{ env.NEW_UCX_PY_VER }}`.
