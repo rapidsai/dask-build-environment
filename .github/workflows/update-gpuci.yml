@@ -29,7 +29,7 @@ jobs:
           CURRENT_UCX_PY_VER: ${{ steps.parse_yaml.outputs.env_CURRENT_UCX_PY_VER }}
         run: |
           echo OLD_RAPIDS_VER=$OLD_RAPIDS_VER >> $GITHUB_ENV
-          echo OLD_UCX_PY_VER=$OLD_UCX_PY_VER >> $GITHUB_E
+          echo OLD_UCX_PY_VER=$OLD_UCX_PY_VER >> $GITHUB_ENV
           echo CURRENT_RAPIDS_VER=$CURRENT_RAPIDS_VER >> $GITHUB_ENV
           echo CURRENT_UCX_PY_VER=$CURRENT_UCX_PY_VER >> $GITHUB_ENV
 
