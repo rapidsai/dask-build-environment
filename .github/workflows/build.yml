@@ -11,10 +11,10 @@ on:
 
 env:
   push: ${{ github.repository == 'rapidsai/dask-build-environment' && contains(fromJSON('["push", "schedule", "workflow_dispatch"]'), github.event_name) }}
-  STABLE_RAPIDS_VER: "24.10"
-  STABLE_UCX_PY_VER: "0.40"
-  NIGHTLY_RAPIDS_VER: "24.12"
-  NIGHTLY_UCX_PY_VER: "0.41"
+  STABLE_RAPIDS_VER: "24.12"
+  STABLE_UCX_PY_VER: "0.41"
+  NIGHTLY_RAPIDS_VER: "25.02"
+  NIGHTLY_UCX_PY_VER: "0.42"
 
 jobs:
   docker:
