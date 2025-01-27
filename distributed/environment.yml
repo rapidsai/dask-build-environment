@@ -14,5 +14,4 @@ dependencies:
 - cupy
 - pynvml
 - pytorch=*=*cudaCUDA_VER*
-- ucx-proc=*=gpu
 - ucx-py=UCX_PY_VER

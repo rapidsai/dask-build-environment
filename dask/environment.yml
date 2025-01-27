@@ -10,5 +10,4 @@ dependencies:
 - dask-cudf=RAPIDS_VER
 - cupy
 - pynvml
-- ucx-proc=*=gpu
 - ucx-py=UCX_PY_VER
